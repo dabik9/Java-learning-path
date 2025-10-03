@@ -26,9 +26,13 @@ public class Main {
                     
                     3. Информация об аккаунте \
                     
-                    4. Выход \
+                    4. Смена никнейма \
                     
-                    5. Убить систему
+                    5. Смена пароля \
+                    
+                    6. Выход \
+                    
+                    7. Убить систему
                     """);
 
             System.out.print("Выберите команду: ");
@@ -51,6 +55,21 @@ public class Main {
                     System.out.print("Введите пароль: ");
                     String passwordRegister = CONSOLE.nextLine();
 
+                    if (usernameRegister.isEmpty() || emailRegister.isEmpty() || passwordRegister.isEmpty()) {
+                        System.out.println("Ошибка при регистрации! \n");
+                        break;
+                    }
+
+                    if (usernameRegister.length() < 3) {
+                        System.out.println("Никнейм слишком короткий! Необходим никнейм от 3 символов!\n");
+                        break;
+                    }
+
+                    if (passwordRegister.length() < 6) {
+                        System.out.println("Пароль должен слишком короткий! Необходим пароль от 6 символов!\n");
+                        break;
+                    }
+
                     id++;
                     username = usernameRegister;
                     email = emailRegister;
@@ -63,11 +82,6 @@ public class Main {
                     System.out.println();
                     if (login) {
                         System.out.println("Вы уже вошли в аккаунт!\n");
-                        break;
-                    }
-
-                    if (username == null || password == null || email == null) {
-                        System.out.println("Аккаунт не найден! Зарегистрируйтесь!\n");
                         break;
                     }
 
@@ -101,8 +115,55 @@ public class Main {
                             "Пароль: " + password + "\n" +
                             "Роль: " + role + "\n"
                     );
+                    break;
 
                 case 4:
+                    System.out.println();
+                    if (!login) {
+                        System.out.println("Вы не вошли в аккаунт!\n");
+                        break;
+                    }
+
+                    System.out.println("Смена никнейма!\n");
+                    System.out.print("Введите новый никнейм: ");
+                    String newUsername = CONSOLE.nextLine();
+
+                    if (newUsername.isEmpty()) {
+                        System.out.println("Никнейм не может быть пустым!\n");
+                        break;
+                    }
+
+                    System.out.println("Никнейм успешно изменён!\n");
+                    username = newUsername;
+                    break;
+
+                case 5:
+                    System.out.println();
+                    if (!login) {
+                        System.out.println("Вы не вошли в аккаунт!\n");
+                        break;
+                    }
+
+                    System.out.println("Смена пароля!\n");
+                    System.out.print("Введите новый пароль: ");
+                    String newPassword = CONSOLE.nextLine();
+
+                    if (newPassword.isEmpty()) {
+                        System.out.println("Пароль не может быть пустым!\n");
+                        break;
+                    }
+
+                    if (newPassword.length() < 6) {
+                        System.out.println("Пароль должен быть минимум от 6 символов!\n");
+                        break;
+
+                    }
+
+                    System.out.println("Пароль успешно изменён!\n");
+                    password = newPassword;
+                    break;
+
+                case 6:
                     System.out.println();
                     if (!login) {
                         System.out.println("Вы не вошли в аккаунт!\n");
@@ -113,7 +174,7 @@ public class Main {
                     login = false;
                     break;
 
-                case 5:
+                case 7:
                     System.out.println();
                     if (role.equals("admin")) {
                         System.out.println("Система убита!");
