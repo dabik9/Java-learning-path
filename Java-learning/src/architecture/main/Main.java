@@ -1,5 +1,7 @@
 package architecture.main;
 
+import architecture.model.User;
+
 import java.util.Scanner;
 
 public class Main {
@@ -8,12 +10,7 @@ public class Main {
         Scanner CONSOLE = new Scanner(System.in);
         boolean flag = true;
         boolean login = false;
-
-        int id = 0;
-        String username = null;
-        String email = null;
-        String password = null;
-        String role = "user";
+        User user = null;
 
 
         while (flag) {
@@ -70,11 +67,7 @@ public class Main {
                         break;
                     }
 
-                    id++;
-                    username = usernameRegister;
-                    email = emailRegister;
-                    password = passwordRegister;
-
+                    user = new User(0, usernameRegister, emailRegister, passwordRegister, "user", 100);
                     System.out.println("Регистрация прошла успешно!\n");
                     break;
 
@@ -91,7 +84,7 @@ public class Main {
                     System.out.print("Введите пароль: ");
                     String passwordLogin = CONSOLE.nextLine();
 
-                    if (!usernameLogin.equals(username) || !passwordLogin.equals(password)) {
+                    if (!usernameLogin.equals(user.getUsername()) || !passwordLogin.equals(user.getPassword())) {
                         System.out.println("Неверный никнейм или пароль!\n");
                         break;
                     }
@@ -107,14 +100,8 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Информация об аккаунте: " + username + "!\n");
-                    System.out.println(
-                            "ID: " + id + "\n" +
-                            "Никнейм: " + username + "\n" +
-                            "Почта: " + email + "\n" +
-                            "Пароль: " + password + "\n" +
-                            "Роль: " + role + "\n"
-                    );
+                    System.out.println("Информация об аккаунте: " + user.getUsername() + "!\n");
+                    System.out.println(user.toString());
                     break;
 
                 case 4:
@@ -133,8 +120,13 @@ public class Main {
                         break;
                     }
 
+                    if (newUsername.length() < 3) {
+                        System.out.println("Никнейм должен содержать не менее 3 символов!\n");
+                        break;
+                    }
+
                     System.out.println("Никнейм успешно изменён!\n");
-                    username = newUsername;
+                    user.setUsername(newUsername);
                     break;
 
                 case 5:
@@ -160,7 +152,7 @@ public class Main {
                     }
 
                     System.out.println("Пароль успешно изменён!\n");
-                    password = newPassword;
+                    user.setPassword(newPassword);
                     break;
 
                 case 6:
@@ -176,7 +168,7 @@ public class Main {
 
                 case 7:
                     System.out.println();
-                    if (role.equals("admin")) {
+                    if (user.getRole().equals("admin")) {
                         System.out.println("Система убита!");
                         flag = false;
                     }
